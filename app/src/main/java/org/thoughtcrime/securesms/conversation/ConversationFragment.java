@@ -1152,7 +1152,7 @@ public class ConversationFragment extends LoggingFragment {
       wasAtBottom    = currentlyAtBottom;
       lastPositionId = positionId;
 
-      postMarkAsReadRequest();
+//      postMarkAsReadRequest();
     }
 
     @Override
@@ -1500,7 +1500,7 @@ public class ConversationFragment extends LoggingFragment {
     {
       super(recyclerView, scrollRequestValidator, () -> {
         list.scrollToPosition(0);
-        list.post(ConversationFragment.this::postMarkAsReadRequest);
+//        list.post(ConversationFragment.this::postMarkAsReadRequest);
       });
     }
 
