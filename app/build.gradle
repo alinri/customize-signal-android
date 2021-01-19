@@ -98,7 +98,7 @@ android {
     defaultConfig {
         versionCode canonicalVersionCode * postFixSize
         versionName canonicalVersionName
-
+        applicationId = 'org.thoughtcrimetwo.securesms'
         minSdkVersion MINIMUM_SDK
         targetSdkVersion TARGET_SDK
 
