@@ -1078,7 +1078,7 @@ public class ConversationFragment extends LoggingFragment {
     });
   }
 
-  private void postMarkAsReadRequest() {
+  public void postMarkAsReadRequest() {
     if (getListAdapter().hasNoConversationMessages()) {
       return;
     }
