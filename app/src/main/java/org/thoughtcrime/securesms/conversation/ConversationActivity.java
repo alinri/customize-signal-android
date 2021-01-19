@@ -454,9 +454,9 @@ public class ConversationActivity extends PassphraseRequiredActivity
               });
             }
 
-            if (TextSecurePreferences.isTypingIndicatorsEnabled(ConversationActivity.this)) {
-              composeText.addTextChangedListener(typingTextWatcher);
-            }
+//            if (TextSecurePreferences.isTypingIndicatorsEnabled(ConversationActivity.this)) {
+//              composeText.addTextChangedListener(typingTextWatcher);
+//            }
             composeText.setSelection(composeText.length(), composeText.length());
           }
         });
