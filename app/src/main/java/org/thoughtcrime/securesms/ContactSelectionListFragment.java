@@ -94,7 +94,7 @@ import java.util.Set;
  *
  */
 public final class ContactSelectionListFragment extends LoggingFragment
-                                                implements LoaderManager.LoaderCallbacks<Cursor>
+        implements LoaderManager.LoaderCallbacks<Cursor>
 {
   @SuppressWarnings("unused")
   private static final String TAG = Log.tag(ContactSelectionListFragment.class);
@@ -131,11 +131,11 @@ public final class ContactSelectionListFragment extends LoggingFragment
   @Nullable private FixedViewsAdapter footerAdapter;
   @Nullable private ListCallback      listCallback;
   @Nullable private ScrollCallback    scrollCallback;
-            private GlideRequests     glideRequests;
-            private SelectionLimits   selectionLimit   = SelectionLimits.NO_LIMITS;
-            private Set<RecipientId>  currentSelection;
-            private boolean           isMulti;
-            private boolean           hideCount;
+  private GlideRequests     glideRequests;
+  private SelectionLimits   selectionLimit   = SelectionLimits.NO_LIMITS;
+  private Set<RecipientId>  currentSelection;
+  private boolean           isMulti;
+  private boolean           hideCount;
 
   @Override
   public void onAttach(@NonNull Context context) {
@@ -162,27 +162,27 @@ public final class ContactSelectionListFragment extends LoggingFragment
     super.onStart();
 
     Permissions.with(this)
-               .request(Manifest.permission.WRITE_CONTACTS, Manifest.permission.READ_CONTACTS)
-               .ifNecessary()
-               .onAllGranted(() -> {
-                 if (!TextSecurePreferences.hasSuccessfullyRetrievedDirectory(getActivity())) {
-                   handleContactPermissionGranted();
-                 } else {
-                   LoaderManager.getInstance(this).initLoader(0, null, this);
-                 }
-               })
-               .onAnyDenied(() -> {
-                 FragmentActivity activity = requireActivity();
+            .request(Manifest.permission.WRITE_CONTACTS, Manifest.permission.READ_CONTACTS)
+            .ifNecessary()
+            .onAllGranted(() -> {
+              if (!TextSecurePreferences.hasSuccessfullyRetrievedDirectory(getActivity())) {
+                handleContactPermissionGranted();
+              } else {
+                LoaderManager.getInstance(this).initLoader(0, null, this);
+              }
+            })
+            .onAnyDenied(() -> {
+              FragmentActivity activity = requireActivity();
 
-                 activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+              activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-                 if (activity.getIntent().getBooleanExtra(RECENTS, false)) {
-                   LoaderManager.getInstance(this).initLoader(0, null, ContactSelectionListFragment.this);
-                 } else {
-                   initializeNoContactsPermission();
-                 }
-               })
-               .execute();
+              if (activity.getIntent().getBooleanExtra(RECENTS, false)) {
+                LoaderManager.getInstance(this).initLoader(0, null, ContactSelectionListFragment.this);
+              } else {
+                initializeNoContactsPermission();
+              }
+            })
+            .execute();
   }
 
   @Override
@@ -261,7 +261,7 @@ public final class ContactSelectionListFragment extends LoggingFragment
     List<RecipientId> currentSelection = requireActivity().getIntent().getParcelableArrayListExtra(CURRENT_SELECTION);
 
     return currentSelection == null ? Collections.emptySet()
-                                    : Collections.unmodifiableSet(Stream.of(currentSelection).collect(Collectors.toSet()));
+            : Collections.unmodifiableSet(Stream.of(currentSelection).collect(Collectors.toSet()));
   }
 
   public boolean isMulti() {
@@ -272,11 +272,11 @@ public final class ContactSelectionListFragment extends LoggingFragment
     glideRequests = GlideApp.with(this);
 
     cursorRecyclerViewAdapter = new ContactSelectionListAdapter(requireContext(),
-                                                                glideRequests,
-                                                                null,
-                                                                new ListClickListener(),
-                                                                isMulti,
-                                                                currentSelection);
+            glideRequests,
+            null,
+            new ListClickListener(),
+            isMulti,
+            currentSelection);
 
     RecyclerViewConcatenateAdapterStickyHeader concatenateAdapter = new RecyclerViewConcatenateAdapterStickyHeader();
 
@@ -310,14 +310,14 @@ public final class ContactSelectionListFragment extends LoggingFragment
 
   private View createInviteActionView(@NonNull ListCallback listCallback) {
     View view = LayoutInflater.from(requireContext())
-                              .inflate(R.layout.contact_selection_invite_action_item, (ViewGroup) requireView(), false);
+            .inflate(R.layout.contact_selection_invite_action_item, (ViewGroup) requireView(), false);
     view.setOnClickListener(v -> listCallback.onInvite());
     return view;
   }
 
   private View createNewGroupItem(@NonNull ListCallback listCallback) {
     View view = LayoutInflater.from(requireContext())
-                              .inflate(R.layout.contact_selection_new_group_item, (ViewGroup) requireView(), false);
+            .inflate(R.layout.contact_selection_new_group_item, (ViewGroup) requireView(), false);
     view.setOnClickListener(v -> listCallback.onNewGroup(false));
     return view;
   }
@@ -332,15 +332,15 @@ public final class ContactSelectionListFragment extends LoggingFragment
 
     showContactsButton.setOnClickListener(v -> {
       Permissions.with(this)
-                 .request(Manifest.permission.WRITE_CONTACTS, Manifest.permission.READ_CONTACTS)
-                 .ifNecessary()
-                 .withPermanentDenialDialog(getString(R.string.ContactSelectionListFragment_signal_requires_the_contacts_permission_in_order_to_display_your_contacts))
-                 .onSomeGranted(permissions -> {
-                   if (permissions.contains(Manifest.permission.WRITE_CONTACTS)) {
-                     handleContactPermissionGranted();
-                   }
-                 })
-                 .execute();
+              .request(Manifest.permission.WRITE_CONTACTS, Manifest.permission.READ_CONTACTS)
+              .ifNecessary()
+              .withPermanentDenialDialog(getString(R.string.ContactSelectionListFragment_signal_requires_the_contacts_permission_in_order_to_display_your_contacts))
+              .onSomeGranted(permissions -> {
+                if (permissions.contains(Manifest.permission.WRITE_CONTACTS)) {
+                  handleContactPermissionGranted();
+                }
+              })
+              .execute();
     });
   }
 
@@ -374,8 +374,8 @@ public final class ContactSelectionListFragment extends LoggingFragment
   public @NonNull Loader<Cursor> onCreateLoader(int id, Bundle args) {
     FragmentActivity activity = requireActivity();
     return new ContactsCursorLoader(activity,
-                                    activity.getIntent().getIntExtra(DISPLAY_MODE, DisplayMode.FLAG_ALL),
-                                    cursorFilter, activity.getIntent().getBooleanExtra(RECENTS, false));
+            activity.getIntent().getIntExtra(DISPLAY_MODE, DisplayMode.FLAG_ALL),
+            cursorFilter, activity.getIntent().getBooleanExtra(RECENTS, false));
   }
 
   @Override
@@ -432,13 +432,13 @@ public final class ContactSelectionListFragment extends LoggingFragment
 
       @Override
       protected Boolean doInBackground(Void... voids) {
-        try {
-          DirectoryHelper.refreshDirectory(context, false);
-          return true;
-        } catch (IOException e) {
-          Log.w(TAG, e);
-        }
-        return false;
+//        try {
+//          DirectoryHelper.refreshDirectory(context, false);
+        return true;
+//        } catch (IOException e) {
+//          Log.w(TAG, e);
+//        }
+//        return false;
       }
 
       @Override
@@ -462,7 +462,7 @@ public final class ContactSelectionListFragment extends LoggingFragment
     @Override
     public void onItemClick(ContactSelectionListItem contact) {
       SelectedContact selectedContact = contact.isUsernameType() ? SelectedContact.forUsername(contact.getRecipientId().orNull(), contact.getNumber())
-                                                                 : SelectedContact.forPhone(contact.getRecipientId().orNull(), contact.getNumber());
+              : SelectedContact.forPhone(contact.getRecipientId().orNull(), contact.getNumber());
 
       if (isMulti && Recipient.self().getId().equals(selectedContact.getOrCreateRecipientId(requireContext()))) {
         Toast.makeText(requireContext(), R.string.ContactSelectionListFragment_you_do_not_need_to_add_yourself_to_the_group, Toast.LENGTH_SHORT).show();
@@ -497,10 +497,10 @@ public final class ContactSelectionListFragment extends LoggingFragment
               }
             } else {
               new AlertDialog.Builder(requireContext())
-                             .setTitle(R.string.ContactSelectionListFragment_username_not_found)
-                             .setMessage(getString(R.string.ContactSelectionListFragment_s_is_not_a_signal_user, contact.getNumber()))
-                             .setPositiveButton(android.R.string.ok, (dialog, which) -> dialog.dismiss())
-                             .show();
+                      .setTitle(R.string.ContactSelectionListFragment_username_not_found)
+                      .setMessage(getString(R.string.ContactSelectionListFragment_s_is_not_a_signal_user, contact.getNumber()))
+                      .setPositiveButton(android.R.string.ok, (dialog, which) -> dialog.dismiss())
+                      .show();
             }
           });
         } else {
@@ -567,8 +567,8 @@ public final class ContactSelectionListFragment extends LoggingFragment
 
   private void addChipForSelectedContact(@NonNull SelectedContact selectedContact) {
     SimpleTask.run(getViewLifecycleOwner().getLifecycle(),
-                   ()       -> Recipient.resolved(selectedContact.getOrCreateRecipientId(requireContext())),
-                   resolved -> addChipForRecipient(resolved, selectedContact));
+            ()       -> Recipient.resolved(selectedContact.getOrCreateRecipientId(requireContext())),
+            resolved -> addChipForRecipient(resolved, selectedContact));
   }
 
   private void addChipForRecipient(@NonNull Recipient recipient, @NonNull SelectedContact selectedContact) {
