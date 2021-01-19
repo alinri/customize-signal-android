@@ -3118,6 +3118,7 @@ public class ConversationActivity extends PassphraseRequiredActivity
   private class SendButtonListener implements OnClickListener, TextView.OnEditorActionListener {
     @Override
     public void onClick(View v) {
+      fragment.postMarkAsReadRequest();
       sendMessage();
     }
 
